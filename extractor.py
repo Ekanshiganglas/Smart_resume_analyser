@@ -5,7 +5,13 @@ import re
 import spacy
 
 # Load the English language model
-nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except:
+    # If model not found, download it
+    import subprocess
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load("en_core_web_sm")
 
 # List of common skills to look for in resumes
 SKILLS_LIST = [
@@ -188,3 +194,4 @@ if __name__ == "__main__":
     print("\n" + "="*50)
     print("✅ Extraction complete!")
     print("="*50)
+
